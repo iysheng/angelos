@@ -169,8 +169,8 @@ MACHINE_START(STM32, "STMicro STM32")
 	 * (since no mapping is needed to access this port),
 	 * but let's keep these fields filled out for consistency.
 	 */
-	.phys_io	= STM32_USART3_BASE,
-	.io_pg_offst	= (IO_ADDRESS(STM32_USART3_BASE) >> 18) & 0xfffc,
+	.phys_io	= STM32_USART1_BASE,
+	.io_pg_offst	= (IO_ADDRESS(STM32_USART1_BASE) >> 18) & 0xfffc,
 	.map_io		= stm32_map_io,
 	.init_irq	= stm32_init_irq,
 	.timer		= &stm32_timer,

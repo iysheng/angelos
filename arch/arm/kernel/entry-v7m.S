@@ -74,6 +74,16 @@ __irq_entry:
 	v7m_exception_fast_exit
 ENDPROC(__irq_entry)
 
+__systick_entry:
+    v7m_exception_entry
+    ldr r1, =0x40022014
+    ldr r2, [r1]
+    eor.w r2, #0x800
+    str r2, [r1]
+	v7m_exception_fast_exit
+ENDPROC(__systick_entry)
+
+
 __pendsv_entry:
 	v7m_exception_entry
 
@@ -208,7 +218,7 @@ ENTRY(vector_table)
 	.long	__invalid_entry		@ 12 - Debug Monitor
 	.long	__invalid_entry		@ 13 - Reserved
 	.long	__pendsv_entry		@ 14 - PendSV
-	.long	__invalid_entry		@ 15 - SysTick
+	.long	__systick_entry		@ 15 - SysTick
 	.rept	NR_IRQS
 	.long	__irq_entry		@ 16.. - NR_IRQS External Interrupts
 	.endr
