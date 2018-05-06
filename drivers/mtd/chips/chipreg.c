@@ -29,7 +29,7 @@ void unregister_mtd_chip_driver(struct mtd_chip_driver *drv)
 	spin_unlock(&chip_drvs_lock);
 }
 
-static struct mtd_chip_driver *get_mtd_chip_driver (const char *name)
+static struct mtd_chip_driver *get_mtd_chip_driver(const char *name)
 {
 	struct list_head *pos;
 	struct mtd_chip_driver *ret = NULL, *this;

@@ -497,7 +497,7 @@ config MTD_NAND_W90P910
 
 config MTD_NAND_EA1788
 	tristate "Support for NAND Flash on EA-LPC1788 board"
-	depends on MTD_NAND && MACH_LPC178X
+	depends on MTD_NAND
 
 config MTD_NAND_EA1788_CHIP_DELAY
 	int "Delay for transfering data from array to read regs"

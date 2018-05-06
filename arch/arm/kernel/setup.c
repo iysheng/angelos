@@ -775,7 +775,6 @@ void __init setup_arch(char **cmdline_p)
 	struct tag *tags = (struct tag *)&init_tags;
 	struct machine_desc *mdesc;
 	char *from = default_command_line;
-
 	unwind_init();
 
 	setup_processor();
@@ -789,7 +788,6 @@ void __init setup_arch(char **cmdline_p)
 		tags = phys_to_virt(__atags_pointer);
 	else if (mdesc->boot_params)
 		tags = phys_to_virt(mdesc->boot_params);
-
 	/*
 	 * If we have the old style parameters, convert them to
 	 * a tag list.

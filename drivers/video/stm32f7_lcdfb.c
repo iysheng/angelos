@@ -79,7 +79,7 @@ static void stm_clock_init(void)
 	clk_enable(clk_get_sys(0, "gpiok"));
 }
 
-static void ltdc_init(base)
+static void ltdc_init(u32 base)
 {
 	stm_clock_init();
 
@@ -155,7 +155,7 @@ err_exit:
 	return ret;
 }
 
-static struct platform_driver fb_pdrv = {
+static struct platform_driver fb_pdrv __refdata = {
 	.probe	= fb_probe,
 	.driver	= {
 		.name	= DRIVER_NAME,

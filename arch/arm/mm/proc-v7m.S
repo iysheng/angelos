@@ -159,6 +159,13 @@ __v7m_setup:
 	msr	control, r0		@ Thread mode has unpriviledged access
 
 	@ Configure the System Control Register
+	@ldr r0, =0xe000ef9c     @ L1 cache register
+	@ldr r12, [r0]	
+	@orr r12, #5             @ write through
+	@str r12, [r0]
+	@dsb
+	@isb
+	
 	ldr	r0, =0xe000ed14		@ system control register
 	ldr	r12, [r0]
 	orr	r12, #1 << 9		@ STKALIGN

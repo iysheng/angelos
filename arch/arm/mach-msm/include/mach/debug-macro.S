@@ -41,6 +41,7 @@
 	.endm
 #else
 	.macro	addruart,rx
+	
 	.endm
 
 	.macro	senduart,rd,rx

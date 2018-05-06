@@ -45,9 +45,13 @@ static void __iomem *ea1788_nand_base;
  *	CLE IO_ADDR_W+(1<<20)
  *
  */
-
+#ifdef CONFIG_ARCH_STM32F7
+#define NAND_ALE_OFFS	(1UL << 17)
+#define NAND_CLE_OFFS	(1UL << 16)
+#else
 #define NAND_ALE_OFFS	(1UL << 19)
 #define NAND_CLE_OFFS	(1UL << 20)
+#endif
 
 static void ea1788_nand_hwcontrol(struct mtd_info *mtd, int cmd,
 						unsigned int ctrl)
@@ -58,7 +62,6 @@ static void ea1788_nand_hwcontrol(struct mtd_info *mtd, int cmd,
 		addr |= NAND_ALE_OFFS;
 	else if (ctrl & NAND_CLE)
 		addr |= NAND_CLE_OFFS;
-
 	if (cmd != NAND_CMD_NONE)
 		writeb(cmd, (void __iomem *) addr);
 }
@@ -78,7 +81,7 @@ static int ea1788_nand_probe(struct platform_device *dev)
 	int nbparts = 0;
 #endif
 	int ret = 0;
-
+    printk("iysheng %s\n", __func__);
 	nand_data = dev->dev.platform_data;
 	if (nand_data == NULL)
 		return -ENODEV;
@@ -113,9 +116,18 @@ static int ea1788_nand_probe(struct platform_device *dev)
 	this->IO_ADDR_R = ea1788_nand_base;
 	this->IO_ADDR_W = ea1788_nand_base;
 	this->cmd_ctrl = ea1788_nand_hwcontrol;
+#ifdef CONFIG_MTD_NAND_EA1788_CHIP_DELAY
 	this->chip_delay = CONFIG_MTD_NAND_EA1788_CHIP_DELAY;
+#else
+    this->chip_delay = 10;
+#endif
+#ifndef CONFIG_ARCH_STM32F7
 	this->ecc.mode = NAND_ECC_SOFT;
 	this->options = NAND_USE_FLASH_BBT;
+#else
+    this->ecc.mode = NAND_ECC_NONE;
+    this->options = NAND_SKIP_BBTSCAN;
+#endif
 
 	/* Scan to find existance of the device */
 	if (nand_scan(ea1788_mtd, 1)) {
@@ -177,6 +189,7 @@ static struct platform_driver ea1788_nand_driver = {
 
 static int __init ea1788_init(void)
 {
+    printk("iysheng %s\n", __func__);
 	return platform_driver_register(&ea1788_nand_driver);
 }
 

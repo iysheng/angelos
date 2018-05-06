@@ -127,6 +127,47 @@ static struct platform_device flash_dev = {
 		.platform_data = &physmap_flash_data,
 	},
 };
+        
+#define CONFIG_STM32_NAND
+#ifdef CONFIG_STM32_NAND
+static struct resource nand_resources[] = {
+	{
+		.flags	= IORESOURCE_MEM,
+	},
+};
+
+#define NAND_IMAGE_OFFSET	0x20000
+#define NAND_JFFS2_OFFSET	(3*1024*1024)
+static struct mtd_partition nand_partitions[] = {
+	{
+		.name	= "nand_uboot_env",
+		.offset = 0,
+		.size	= NAND_IMAGE_OFFSET,
+	},
+	{
+		.name	= "nand_linux_image",
+		.offset = NAND_IMAGE_OFFSET,
+		.size	= (NAND_JFFS2_OFFSET - NAND_IMAGE_OFFSET),
+	},
+	{
+		.name	= "nand_jffs2",
+		.offset = NAND_JFFS2_OFFSET,
+	},
+};
+
+static struct physmap_flash_data nand_data = {
+	.parts		= nand_partitions,
+	.nr_parts	= ARRAY_SIZE(nand_partitions),
+};
+
+static struct platform_device nand_dev = {
+	.name           = "lpc178x_nand",
+	.id             = -1,
+	.resource       = nand_resources,
+	.num_resources  = ARRAY_SIZE(nand_resources),
+	.dev		= { .platform_data = &nand_data },
+};   
+#endif
 
 char stm32f4x9_flash_dev_name[] = "stm32f4-flash";
 
@@ -157,6 +198,10 @@ void __init stm32_flash_init(void)
 		flash_dev.resource[0].start = CONFIG_FLASH_MEM_BASE;
 		size = CONFIG_FLASH_SIZE;
 		break;
+    case PLATFORM_STM32_STM32F7_DISCO:
+		flash_dev.resource[0].start = CONFIG_MTD_PHYSMAP_START;
+		size = CONFIG_MTD_PHYSMAP_LEN;
+		break;
 	default:
 		printk(KERN_ERR "%s: Unknown platform %#x, exit\n", __func__,
 			stm32_platform_get());
@@ -180,3 +225,5 @@ void __init stm32_flash_init(void)
 xit:
 	return;
 }
+
+

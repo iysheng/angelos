@@ -60,9 +60,13 @@ static void __init stm32_init(void);
 #ifdef CONFIG_ARCH_STM32F1
 /* STM32F1 default platform */
 static int stm32_platform = PLATFORM_STM32_SWISSEMBEDDED_COMM;
+#elif defined(CONFIG_ARCH_STM32F7)
+/* STM32F2 default platform */
+static int stm32_platform = PLATFORM_STM32_STM32F7_DISCO;
 #else
 /* STM32F2 default platform */
 static int stm32_platform = PLATFORM_STM32_STM3220G_EVAL;
+
 #endif
 
 /*
@@ -78,6 +82,7 @@ static struct sys_timer stm32_timer = {
 EXPORT_SYMBOL(stm32_platform_get);
 int stm32_platform_get(void)
 {
+    printk("iysheng %s stm32_platform=%d \n", __func__, stm32_platform);
 	return stm32_platform;
 }
 
@@ -249,7 +254,7 @@ static void __init stm32_init(void)
 	 */
 	stm32_flash_init();
 #endif
-
+    stm32_nand_init();
 #if defined(CONFIG_MMC_ARMMMCI)
 	/*
 	 * Configure SD card controller

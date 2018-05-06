@@ -1,7 +1,6 @@
 /*
- * Copyright (C) 2011
- * Vladimir Khusainov, Emcraft Systems, vlad@emcraft.com
- * Sergei Poselenov, Emcraft Systems, sposelenov@emcraft.com
+ * Copyright (C) 2014
+ * Anton Protopopov, Emcraft Systems, antonp@emcraft.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +17,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _MACH_STM32_FLASH_H_
-#define _MACH_STM32_FLASH_H_
+#ifndef _MACH_STM32_NAND_H_
+#define _MACH_STM32_NAND_H_
 
-extern void __init stm32_flash_init(void);
 extern void __init stm32_nand_init(void);
 
-#endif	/*_MACH_STM32_FLASH_H_ */
+#endif	/* _MACH_LPC178X_NAND_H_ */
+

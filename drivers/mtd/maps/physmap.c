@@ -121,7 +121,7 @@ static int physmap_flash_probe(struct platform_device *dev)
 		info->map[i].name = dev_name(&dev->dev);
 		info->map[i].phys = dev->resource[i].start;
 		info->map[i].size = dev->resource[i].end - dev->resource[i].start + 1;
-		info->map[i].bankwidth = physmap_data->width;
+		info->map[i].bankwidth = physmap_data->width;//iysheng@163.com witdh=1
 		info->map[i].set_vpp = physmap_data->set_vpp;
 		info->map[i].pfow_base = physmap_data->pfow_base;
 

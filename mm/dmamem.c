@@ -64,7 +64,7 @@ static int __init parse_tag_dmamem(const struct tag *tag)
 	dm_base = tag->u.dmamem.base;
 	dm_sz_fb = tag->u.dmamem.sz_fb;
 	dm_sz_all = tag->u.dmamem.sz_all;
-
+ 
 	return 0;
 }
 __tagtable(ATAG_DMAMEM, parse_tag_dmamem);
